@@ -44,4 +44,5 @@
   programs.fzf.enable = true;
   programs.home-manager.enable = true;
   fonts.fontconfig.enable = true;
+  services.kdeconnect.enable = true;
 }
