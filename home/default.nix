@@ -27,8 +27,6 @@
 
   xdg.configFile = {
     "fastfetch".source = ./dots/fastfetch;
-    "fish/functions".source = ./dots/fish/functions;
-    "fish/completions".source = ./dots/fish/completions;
     "fish/conf.d".source = ./dots/fish/conf.d;
   };
 
