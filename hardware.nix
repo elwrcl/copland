@@ -13,7 +13,7 @@
     fsType = "ext4";
   };
 
-  fileSystems."/mnt/mnt/HDD" = {
+  fileSystems."/mnt/HDD" = {
     device = "/dev/disk/by-uuid/a9d12042-6501-4725-84bd-6e0bdbb64427";
     fsType = "ext4";
     options = [ "defaults" "nofail" ];
