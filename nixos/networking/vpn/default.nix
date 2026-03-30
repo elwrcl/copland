@@ -31,4 +31,4 @@
     iptables -I OUTPUT -m mark --mark 0x40000000/0x40000000 -j RETURN
   '';
 
-  networking.firewals
+  networking.firewalls
