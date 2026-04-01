@@ -20,6 +20,6 @@ in
   environment.systemPackages = packages.system ++ [
     inputs.helium.packages.${system}.default
     zen-browser.packages.${system}.default
-#    inputs.noctalia.packages.${system}.default
+    inputs.noctalia.packages.${system}.default
   ];
 }
