@@ -11,7 +11,7 @@
       "GDK_BACKEND,wayland,x11"
       "QT_QPA_PLATFORM,wayland;xcb"
       "ELECTRON_OZONE_PLATFORM_HINT,auto"
-      "TERMINAL,kitty"
+      "TERMINAL,alacritty"
     ];
   };
 }

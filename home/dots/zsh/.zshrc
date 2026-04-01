@@ -1,13 +1,7 @@
-# elarsın muhtesem configi
+# elarsın muhtesem configi 1.04.2026
 eval "$(starship init zsh)"
+eval "$(zoxide init zsh)" 
 
-# deps
-#source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-#source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-# FZF
-#source /usr/share/fzf/key-bindings.zsh
-#source /usr/share/fzf/completion.zsh
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 
@@ -16,6 +10,7 @@ alias ls='eza --icons --group-directories-first'
 alias ll='eza -lah --icons --group-directories-first'
 alias la='eza -a --icons --group-directories-first'
 alias lt='eza --tree --level=2 --icons'
+alias cd='z' 
 
 # allias extra
 alias cat='bat'
@@ -24,19 +19,10 @@ alias df='df -h'
 alias du='du -h'
 alias free='free -h'
 
-alias nano='micro'
-alias edit='micro'
-export EDITOR=micro
-export VISUAL=micro
-export SUDO_EDITOR=micro
-
-# arch shit
-#alias update='sudo pacman -Syu'
-#alias install='sudo pacman -S'
-#alias remove='sudo pacman -Rns'
-#alias search='pacman -Ss'
-#alias orphans='sudo pacman -Rns $(pacman -Qtdq)'
-#alias mirrors='sudo reflector --verbose --latest 10 --sort rate --save /etc/pacman.d/mirrorlist'
+# safety first
+alias cp='cp -i'
+alias mv='mv -i'
+alias rm='trash-put' 
 
 # system
 alias sysinfo='fastfetch'
@@ -51,6 +37,27 @@ alias ....='cd ../../..'
 alias ~='cd ~'
 alias -- -='cd -'
 
+extract() {
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1     ;;
+      *.tar.gz)    tar xzf $1     ;;
+      *.bz2)       bunzip2 $1     ;;
+      *.rar)       unrar e $1     ;;
+      *.gz)        gunzip $1      ;;
+      *.tar)       tar xf $1      ;;
+      *.tbz2)      tar xjf $1     ;;
+      *.tgz)       tar xzf $1     ;;
+      *.zip)       unzip $1       ;;
+      *.Z)         uncompress $1  ;;
+      *.7z)        7z x $1        ;;
+      *)     echo "'$1' can't be extracted" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
 # git
 alias gs='git status'
 alias ga='git add'
@@ -58,39 +65,20 @@ alias gc='git commit -m'
 alias gp='git push'
 alias gl='git log --oneline --graph --decorate'
 
-# confs
-alias zshrc='micro ~/.zshrc'
-alias reload='source ~/.zshrc'
-
-# history
+# history settings ...
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
 setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_SPACE
 setopt SHARE_HISTORY
 
-# completion
+# completion ... 
 autoload -Uz compinit
 compinit
 zstyle ':completion:*' menu select
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 setopt AUTO_CD
 
-# intro
-if [[ -o interactive ]]; then
-    ~/.config/fastfetch/fastfetch_kayan.sh
-fi
-
-# colors
-export CLICOLOR=1
-export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43'
-
-# sdkman
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
-#mesa
+# mesa settings
 export MESA_SHADER_CACHE_MAX_SIZE=2G
-export MESA_SHADER_CACHE_DIR=/tmp/mesa_shader_cache
-export PATH="$HOME/.local/bin:$PATH"
+export MESA_GL_VERSION_OVERRIDE=4.6
+export MESA_GLSL_VERSION_OVERRIDE=460

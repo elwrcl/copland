@@ -135,6 +135,11 @@ with pkgs; {
     wofi
 
     # Desktop tools
+    obs-studio
+    tesseract
+    jq
+    wf-recorder
+    yt-dlp
     wl-clipboard
     grim
     slurp

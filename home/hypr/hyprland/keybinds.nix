@@ -1,45 +1,62 @@
 { ... }:
 
-{
+let
+  # Noctalia IPC shortcut
+  ipc = "noctalia-shell ipc call";
+in {
   wayland.windowManager.hyprland.settings = {
     "$mainMod" = "SUPER";
 
     bindr = [
-      "$mainMod, SUPER_L, exec, pkill fuzzel || fuzzel"
+      "$mainMod, SUPER_L, exec, ${ipc} launcher toggle"
     ];
 
     bind = [
-      # launchers
-      "$mainMod, Return, exec, kitty"
-      "$mainMod, W, exec, zen"
-      "$mainMod, C, exec, zed"
-      "$mainMod, E, exec, dolphin"
-      "$mainMod, R, exec, pkill fuzzel || fuzzel"
+      # ── Workspace Navigation ─────────────────────────────────────────────
+      "CTRL $mainMod, right, workspace, r+1"
+      "CTRL $mainMod, left,  workspace, r-1"
 
-      # window management
-      "$mainMod, Q, killactive"
-      "$mainMod ALT, SPACE, togglefloating"
-      "$mainMod, F, fullscreen, 0"
-      "$mainMod, D, fullscreen, 1"
-      "$mainMod, P, pin"
+      # ── Noctalia Interface ───────────────────────────────────────────────
+      "$mainMod, Tab,         exec, ${ipc} launcher windows"        # overview
+      "$mainMod, P,           exec, ${ipc} bar toggle"              # hide bar
+      "CTRL ALT, Delete,      exec, ${ipc} sessionMenu toggle"      # power menu
 
-      # lock
-      "$mainMod, L, exec, loginctl lock-session"
-      "$mainMod SHIFT, L, exec, systemctl suspend"
+      # ── Screenshot / OCR / Google Lens (screen-shot-and-record plugin) ──
+      "$mainMod SHIFT, S,     exec, ${ipc} plugin:screen-shot-and-record screenshot"
+      "$mainMod SHIFT, Z,     exec, ${ipc} plugin:screen-shot-and-record search"  # google lens
+      "$mainMod SHIFT, X,     exec, ${ipc} plugin:screen-shot-and-record ocr"     # ocr
+      "$mainMod SHIFT, C,     exec, ${ipc} plugin:music panel"                    # music recognition
 
-      # focus
-      "$mainMod, left,  movefocus, l"
-      "$mainMod, right, movefocus, r"
-      "$mainMod, up,    movefocus, u"
-      "$mainMod, down,  movefocus, d"
+      # ── App Launchers ────────────────────────────────────────────────────
+      "$mainMod, Return,      exec, kitty"
+      "$mainMod, W,           exec, zen"                            
+      "$mainMod, E,           exec, dolphin"
+      "$mainMod, Z,           exec, zed"
+      "$mainMod ALT, V,       exec, pavucontrol"                    
+      "$mainMod SHIFT, V,     exec, ${ipc} launcher clipboard"      
+      "$mainMod SHIFT, L,     exec, ${ipc} lockScreen lock"         
+      "CTRL ALT, Escape,      exec, kitty -e btop"                  
 
-      # windows drag
+      # ── Window Management ────────────────────────────────────────────────
+      "$mainMod, Q,           killactive"
+      "$mainMod ALT, SPACE,   togglefloating"
+      "$mainMod, F,           fullscreen, 0"
+      "$mainMod, D,           fullscreen, 1"
+      "$mainMod ALT, P,       pin"
+
+      # ── Focus ────────────────────────────────────────────────────────────
+      "$mainMod, left,        movefocus, l"
+      "$mainMod, right,       movefocus, r"
+      "$mainMod, up,          movefocus, u"
+      "$mainMod, down,        movefocus, d"
+
+      # ── Move Windows ─────────────────────────────────────────────────────
       "$mainMod SHIFT, left,  movewindow, l"
       "$mainMod SHIFT, right, movewindow, r"
       "$mainMod SHIFT, up,    movewindow, u"
       "$mainMod SHIFT, down,  movewindow, d"
 
-      # workspaces
+      # ── Workspaces ───────────────────────────────────────────────────────
       "$mainMod, 1, workspace, 1"
       "$mainMod, 2, workspace, 2"
       "$mainMod, 3, workspace, 3"
@@ -51,7 +68,7 @@
       "$mainMod, 9, workspace, 9"
       "$mainMod, 0, workspace, 10"
 
-      # moveworkspace
+      # ── Move to Workspace ────────────────────────────────────────────────
       "$mainMod SHIFT, 1, movetoworkspace, 1"
       "$mainMod SHIFT, 2, movetoworkspace, 2"
       "$mainMod SHIFT, 3, movetoworkspace, 3"
@@ -63,41 +80,42 @@
       "$mainMod SHIFT, 9, movetoworkspace, 9"
       "$mainMod SHIFT, 0, movetoworkspace, 10"
 
-      # s-workspace
-      "$mainMod, S, togglespecialworkspace"
-      "$mainMod ALT, S, movetoworkspacesilent, special"
+      # ── Special Workspace (scratchpad) ───────────────────────────────────
+      "$mainMod, S,       togglespecialworkspace"
+      "$mainMod ALT, S,   movetoworkspacesilent, special"
 
-      # scrolling
+      # ── Mouse Workspace Scroll ───────────────────────────────────────────
       "$mainMod, mouse_up,   workspace, +1"
       "$mainMod, mouse_down, workspace, -1"
 
-      # screenshot
-      "Super, Print, exec, grim - | wl-copy"
-      "Super SHIFT, S, exec, grim -g \"$(slurp)\" - | wl-copy"
+      # ── Media ────────────────────────────────────────────────────────────
+      "$mainMod SHIFT, N, exec, playerctl next"
+      "$mainMod SHIFT, B, exec, playerctl previous"
+      "$mainMod SHIFT, P, exec, playerctl play-pause"
     ];
 
-    # scaling w-mouse
+    # --- Mouse drag / resize ---
     bindm = [
       "$mainMod, mouse:272, movewindow"
       "$mainMod, mouse:273, resizewindow"
     ];
 
-    # volume
+    # --- Volume / Brightness (repeat) ---
     bindel = [
-      ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
-      ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-      ", XF86MonBrightnessUp,   exec, brightnessctl -e4 -n2 set 5%+"
-      ", XF86MonBrightnessDown, exec, brightnessctl -e4 -n2 set 5%-"
+      ", XF86AudioRaiseVolume,   exec, ${ipc} volume increase"
+      ", XF86AudioLowerVolume,   exec, ${ipc} volume decrease"
+      ", XF86MonBrightnessUp,    exec, ${ipc} brightness increase"
+      ", XF86MonBrightnessDown,  exec, ${ipc} brightness decrease"
     ];
 
-    # other
+    # --- Locked binds (media keys / mute) ---
     bindl = [
-      ", XF86AudioMute,        exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-      ", XF86AudioMicMute,     exec, wpctl set-mute @DEFAULT_SOURCE@ toggle"
-      ", XF86AudioNext,  exec, playerctl next"
-      ", XF86AudioPrev,  exec, playerctl previous"
-      ", XF86AudioPlay,  exec, playerctl play-pause"
-      ", XF86AudioPause, exec, playerctl play-pause"
+      ", XF86AudioMute,    exec, ${ipc} volume muteOutput"
+      ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_SOURCE@ toggle"
+      ", XF86AudioNext,    exec, playerctl next"
+      ", XF86AudioPrev,    exec, playerctl previous"
+      ", XF86AudioPlay,    exec, playerctl play-pause"
+      ", XF86AudioPause,   exec, playerctl play-pause"
     ];
   };
 }
