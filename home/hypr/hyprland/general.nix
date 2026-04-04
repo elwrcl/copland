@@ -65,6 +65,7 @@
       key_press_enables_dpms = true;
       animate_manual_resizes = false;
       focus_on_activate = false;
+      no_direct_scanout = false;
     };
 
     bezier = [
