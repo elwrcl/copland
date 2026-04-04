@@ -7,6 +7,14 @@
   home.homeDirectory = "/home/elars";
   home.stateVersion = "25.05";
 
+  home.pointerCursor = {
+    name = "Bibata-Modern-Classic";
+    package = pkgs.bibata-cursors;
+    size = 24;
+    gtk.enable = true;
+    x11.enable = true;
+  };
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -19,7 +27,7 @@
     enable = true;
     settings = {
     font-family = "JetBrainsMono Nerd Font";
-    font-size = 11;
+    font-size = 10;
     background-opacity = 0.8;
     window-padding-x = 10;
     window-padding-y = 10;
