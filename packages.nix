@@ -175,7 +175,7 @@ with pkgs; {
     telegram-desktop
     ghostty
     onlyoffice-desktopeditors
-    kdePackages.dolphin
+    nautilus
     wine
   ];
 }
