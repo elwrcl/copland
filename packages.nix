@@ -156,7 +156,7 @@ with pkgs; {
     kdePackages.gwenview
     mpv
     equibop
-    equicord
+    discord
     pavucontrol
     playerctl
     pamixer
