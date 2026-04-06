@@ -162,7 +162,7 @@ with pkgs; {
     pamixer
     alsa-utils
     zip
-    7zip
+    p7zip
     calibre
     ani-cli
     gnome-themes-extra
