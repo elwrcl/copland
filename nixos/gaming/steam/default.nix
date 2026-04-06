@@ -11,7 +11,7 @@
         liberation_ttf
         wqy_zenhei
         corefonts
-        vistafonts
+        vista-fonts
         xorg.libXcursor
         xorg.libXi
         xorg.libXinerama
