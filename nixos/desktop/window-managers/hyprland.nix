@@ -20,5 +20,6 @@
     "/run/current-system/sw/share"
     "/home/elars/.nix-profile/share"
   ];
+   GTK_USE_PORTAL = "1";
 };
 }

@@ -17,7 +17,7 @@
       "keep_aspect_ratio on, match:title ^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$"
       "immediate on,         match:class ^(steam_app).*"
       "float on,             match:class ^(steam)$"
-      "float off,            match:class ^(steam)$, match:title ^(Steam)$"
+      "float off,            match:class ^(steam)$, match:title ^(Steam)$"s
     ];
   };
 }

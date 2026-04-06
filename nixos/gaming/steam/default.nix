@@ -26,6 +26,7 @@
         libvorbis
         stdenv.cc.cc.lib
         gamemode
+        zenity
       ];
     };
     gamescopeSession.enable = true;
