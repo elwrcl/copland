@@ -10,6 +10,11 @@
   xdg.mime = {
     enable = true;
     defaultApplications = {
+      "text/html"                = "zen-beta.desktop";
+      "x-scheme-handler/http"   = "zen-beta.desktop";
+      "x-scheme-handler/https"  = "zen-beta.desktop";
+      "x-scheme-handler/about"  = "zen-beta.desktop";
+      "x-scheme-handler/unknown"= "zen-beta.desktop";
       "image/png"     = "org.kde.gwenview.desktop";
       "image/jpeg"    = "org.kde.gwenview.desktop";
       "image/gif"     = "org.kde.gwenview.desktop";
