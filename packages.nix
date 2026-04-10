@@ -101,7 +101,7 @@ with pkgs; {
     webkitgtk_4_1
     xdotool
     easyeffects
-    rnix-lsp
+    nil
     nixpkgs-fmt
     direnv
 
