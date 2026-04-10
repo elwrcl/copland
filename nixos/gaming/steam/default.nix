@@ -12,10 +12,10 @@
         wqy_zenhei
         corefonts
         vista-fonts
-        xorg.libXcursor
-        xorg.libXi
-        xorg.libXinerama
-        xorg.libXScrnSaver
+        libXcursor
+        libXi
+        libXinerama
+        libXScrnSaver
         libgpg-error
         libkrb5
         keyutils
