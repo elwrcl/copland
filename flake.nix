@@ -39,7 +39,10 @@
 
       chaoticOverlay = chaotic.overlays.default;
       cachyosKernelOverlay = nix-cachyos-kernel.overlays.pinned;
-      copetchOverlay = inputs.copetch.overlays.default;
+
+      copetchOverlay = final: prev: {
+        copetch = inputs.copetch.packages.${system}.default;
+      };
 
     in
     {
@@ -57,7 +60,7 @@
             home-manager.nixosModules.home-manager
 
             {
-              nixpkgs.overlays = [ chaoticOverlay cachyosKernelOverlay copetchOverlay ];
+              nixpkgs.overlays = [ chaoticOverlay cachyosKernelOverlay ];
               nixpkgs.config.allowUnfree = true;
             }
 
