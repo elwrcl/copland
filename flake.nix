@@ -10,6 +10,8 @@
     
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
+    copetch.url = "github:elwrcl/copetch";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -38,6 +40,10 @@
       chaoticOverlay = chaotic.overlays.default;
       cachyosKernelOverlay = nix-cachyos-kernel.overlays.pinned;
       
+      copetchOverlay = final: prev: {
+        copetch = inputs.copetch.packages.${system}.default;
+      };
+
     in {
     nixosConfigurations = {
       copland = nixpkgs.lib.nixosSystem {

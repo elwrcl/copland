@@ -72,6 +72,7 @@ with pkgs; {
     luajit
     btop
     fastfetch
+    copetch
     ddcutil
     brightnessctl
     lm_sensors
