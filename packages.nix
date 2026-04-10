@@ -120,6 +120,7 @@ with pkgs; {
     rustc
     cargo
     rust-analyzer
+    rust-src
     gcc
     binutils
     libGL
