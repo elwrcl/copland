@@ -88,11 +88,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1775827786,
-        "narHash": "sha256-lkq1OC0Jyo7vtbryyvUdhg2+jSAMtkxlqP2yxdUelqA=",
+        "lastModified": 1775829566,
+        "narHash": "sha256-gqCOU0W6/c8Qh/vF7/AnP4SNrzCL9Kj0eW5DO8w8Pog=",
         "owner": "elwrcl",
         "repo": "copetch",
-        "rev": "2ea0e09fa30edbfe3df12b2492edd35de5287e6a",
+        "rev": "c26d0f31e6d83ad8a4461f3c2e44b9a24d39149e",
         "type": "github"
       },
       "original": {
