@@ -17,6 +17,8 @@ with pkgs; {
     qt6Packages.qtdeclarative
     qt6Packages.qtwayland
     qt6Packages.qtwebsockets
+    adwaita-qt
+    adwaita-qt6
     mesa
     cava
     direnv

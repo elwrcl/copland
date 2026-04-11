@@ -8,6 +8,8 @@
     ];
     package = pkgs.steam.override {
       extraPkgs = p: with p; [
+        xdg-desktop-portal
+        xdg-desktop-portal-gtk
         liberation_ttf
         wqy_zenhei
         corefonts

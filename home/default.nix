@@ -84,5 +84,15 @@
     "org/gnome/nautilus/preferences" = {
       default-folder-viewer = "icon-view";
     };
+
+    qt = {
+      enable = true;
+      platformTheme.name = "gtk3";
+      style = {
+        name = "adwaita-dark";
+        package = pkgs.adwaita-qt;
+      };
+    };
+
   };
 }
