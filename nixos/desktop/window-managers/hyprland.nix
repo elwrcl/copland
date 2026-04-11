@@ -9,17 +9,24 @@
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
-    config.common.default = "*";
+    config = {
+      common = {
+        default = [ "hyprland" "gtk" ];
+        "org.freedesktop.portal.FileChooser" = [ "gtk" ];
+        "org.freedesktop.portal.Screenshot" = [ "hyprland" ];
+        "org.freedesktop.portal.ScreenCast" = [ "hyprland" ];
+      };
+    };
   };
 
   security.polkit.enable = true;
   services.gnome.gnome-keyring.enable = true;
 
   environment.sessionVariables = {
-   XDG_DATA_DIRS = [
-    "/run/current-system/sw/share"
-    "/home/elars/.nix-profile/share"
-  ];
-   GTK_USE_PORTAL = "1";
-};
+    XDG_DATA_DIRS = [
+      "/run/current-system/sw/share"
+      "/home/elars/.nix-profile/share"
+    ];
+    GTK_USE_PORTAL = "1";
+  };
 }
