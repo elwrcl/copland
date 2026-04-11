@@ -1,10 +1,7 @@
 { config, pkgs, ... }:
-
 {
   time.timeZone = "Europe/Istanbul";
-
   i18n.defaultLocale = "en_US.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "tr_TR.UTF-8";
     LC_IDENTIFICATION = "tr_TR.UTF-8";
@@ -17,16 +14,19 @@
     LC_TIME = "tr_TR.UTF-8";
   };
 
-  services.timesyncd = {
+  services.chrony = {
     enable = true;
     servers = [
       "0.tr.pool.ntp.org"
       "1.tr.pool.ntp.org"
       "time.cloudflare.com"
     ];
+    extraConfig = ''
+      makestep 1.0 3
+      rtcsync
+    '';
   };
 
   console.keyMap = "trq";
-
   system.stateVersion = "25.05";
 }
