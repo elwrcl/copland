@@ -1,9 +1,4 @@
 { pkgs }:
-
-let
-  claw = import ./claw.nix { inherit pkgs; };
-in
-
 with pkgs; {
   system = [
     # Gaming
@@ -29,7 +24,6 @@ with pkgs; {
     # MTP support for Android devices
     libmtp
     jmtpfs
-    doublecmd
     rar
 
     # Iphone stuff
@@ -67,7 +61,6 @@ with pkgs; {
 
     # Development tools
     git
-    claw
     hidapi
     cachix
     dos2unix
