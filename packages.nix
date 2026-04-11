@@ -1,5 +1,9 @@
 { pkgs }:
 
+let
+  claw = import ./claw.nix { inherit pkgs; };
+in
+
 with pkgs; {
   system = [
     # Gaming
@@ -63,6 +67,7 @@ with pkgs; {
 
     # Development tools
     git
+    claw
     hidapi
     cachix
     dos2unix
