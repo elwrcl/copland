@@ -181,6 +181,8 @@ with pkgs; {
     ghostty
     onlyoffice-desktopeditors
     nautilus
+    loupe
     wine
+    blender
   ];
 }
