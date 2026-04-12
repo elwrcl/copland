@@ -18,11 +18,9 @@
       canTouchEfiVariables = true;
       efiSysMountPoint = "/boot";
     };
-    systemd-boot = {
+    
+    limine = {
       enable = true;
-      configurationLimit = 15;
-      consoleMode = "max";
-      editor = false;
     };
   };
 }
