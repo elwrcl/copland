@@ -1,4 +1,39 @@
+
 {
+  description = "copland nixos configurations";
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
+
+    copetch.url = "github:elwrcl/copetch";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    helium = {
+      url = "github:AlvaroParker/helium-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    apple-fonts = {
+      url = "github:Lyndeno/apple-fonts.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+  {
   description = "copland nixos configurations";
 
   inputs = {
@@ -44,6 +79,14 @@
         copetch = inputs.copetch.packages.${system}.default;
       };
 
+      gtkPortalOverlay = final: prev: {
+        xdg-desktop-portal-gtk = prev.xdg-desktop-portal-gtk.overrideAttrs (old: {
+          postInstall = (old.postInstall or "") + ''
+            substituteInPlace $out/share/xdg-desktop-portal/portals/gtk.portal \
+              --replace "UseIn=gnome" "UseIn=gnome;Hyprland"
+          '';
+        });
+      };
     in
     {
       nixosConfigurations = {
@@ -79,4 +122,53 @@
         };
       };
     };
+}
+
+
+  outputs = inputs@{ self, nixpkgs, chaotic, home-manager, nix-cachyos-kernel, ... }:
+let
+system = "x86_64-linux";
+
+chaoticOverlay = chaotic.overlays.default;
+cachyosKernelOverlay = nix-cachyos-kernel.overlays.pinned;
+
+copetchOverlay = final: prev: {
+copetch = inputs.copetch.packages.${system}.default;
+};
+
+in
+{
+nixosConfigurations = {
+copland = nixpkgs.lib.nixosSystem {
+system = system;
+specialArgs = {
+inherit inputs system;
+zen-browser = inputs.zen-browser;
+nix-cachyos-kernel = nix-cachyos-kernel;
+};
+
+modules = [
+chaotic.nixosModules.default
+home-manager.nixosModules.home-manager
+
+{
+nixpkgs.overlays = [ chaoticOverlay cachyosKernelOverlay ];
+nixpkgs.config.allowUnfree = true;
+}
+
+{
+home-manager = {
+useGlobalPkgs = true;
+useUserPackages = true;
+extraSpecialArgs = { inherit inputs system; };
+users.elars = import ./home;
+};
+}
+
+./machine.nix
+./nixos/default.nix
+];
+};
+};
+};
 }
