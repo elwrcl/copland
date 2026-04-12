@@ -1,4 +1,9 @@
 { pkgs }:
+let
+  uxplay-fixed = pkgs.uxplay.override {
+    avahi = pkgs.avahi.override { withLibdnssdCompat = true; };
+  };
+in
 with pkgs; {
   system = [
     # Gaming
@@ -32,7 +37,6 @@ with pkgs; {
     libimobiledevice
     ifuse
     usbmuxd
-    uxplay
 
     # Virtualization
     virt-manager
