@@ -85,7 +85,8 @@
       default-folder-viewer = "icon-view";
     };
   };
-
+  xdg.configFile."xdg-desktop-portal/portals/gtk.portal".source =
+    "${pkgs.xdg-desktop-portal-gtk}/share/xdg-desktop-portal/portals/gtk.portal";
   qt = {
     enable = true;
     platformTheme.name = "gtk3";

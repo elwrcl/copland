@@ -34,7 +34,11 @@
         pkgsi686Linux.mesa
       ];
     };
+    environment.sessionVariables = {
+      STEAM_USE_PORTAL = "1";
+    };
     gamescopeSession.enable = true;
   };
   programs.bash.enable = true;
+
 }
