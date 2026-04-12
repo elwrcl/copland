@@ -14,18 +14,6 @@
     LC_TIME = "tr_TR.UTF-8";
   };
 
-  services.chrony = {
-    enable = true;
-    servers = [
-      "0.tr.pool.ntp.org"
-      "1.tr.pool.ntp.org"
-      "time.cloudflare.com"
-    ];
-    extraConfig = ''
-      makestep 1.0 3
-    '';
-  };
-
   console.keyMap = "trq";
   system.stateVersion = "25.05";
 }
