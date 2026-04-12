@@ -25,11 +25,13 @@ in
   hardware.graphics.extraPackages = [
     wayland-intel-vaapi-driver
     pkgs.libvdpau-va-gl
+    pkgs.mesa
   ];
 
   hardware.graphics.extraPackages32 = [
     wayland-intel-vaapi-driver-32
     pkgs.pkgsi686Linux.libvdpau-va-gl
+    pkgs.pkgsi686Linux.mesa
   ];
 
   services.xserver.videoDrivers = [ "modesetting" ];

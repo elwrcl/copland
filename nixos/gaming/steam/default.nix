@@ -29,6 +29,9 @@
         stdenv.cc.cc.lib
         gamemode
         zenity
+        pkgsi686Linux.libgcc
+        pkgsi686Linux.glibc
+        pkgsi686Linux.mesa
       ];
     };
     gamescopeSession.enable = true;
