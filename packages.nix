@@ -117,9 +117,10 @@ with pkgs; {
     neovim
     helix
     vscode
-    zed-editor
+    (zed-editor.override { withGLES = true; })
+  ];
 
-    # Languages
+  # Languages
     uv
     pkg-config
     odin
@@ -190,5 +191,5 @@ with pkgs; {
     spacedrive
     wine
     blender
-  ];
-}
+    ];
+    }
