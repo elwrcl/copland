@@ -29,7 +29,7 @@ in
       "$mainMod, Return,      exec, ghostty"
       "$mainMod, W,           exec, zen-beta"
       "$mainMod, E,           exec, nautilus"
-      "$mainMod, Z,           exec, code"
+      "$mainMod, Z,           exec, zeditor"
       "$mainMod ALT, V,       exec, pavucontrol"
       "$mainMod SHIFT, V,     exec, ${ipc} launcher clipboard"
       "$mainMod SHIFT, L,     exec, ${ipc} lockScreen lock"
