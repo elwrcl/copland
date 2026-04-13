@@ -6,6 +6,7 @@
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
+    oceanix.url = "github:LEXUGE/oceanix";
     copetch.url = "github:elwrcl/copetch";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -51,11 +52,13 @@
           system = system;
           specialArgs = {
             inherit inputs system;
+            oceanix = inputs.oceanix;
             zen-browser = inputs.zen-browser;
             nix-cachyos-kernel = nix-cachyos-kernel;
           };
 
           modules = [
+            inputs.oceanix.nixosModules.default
             chaotic.nixosModules.default
             home-manager.nixosModules.home-manager
             {
