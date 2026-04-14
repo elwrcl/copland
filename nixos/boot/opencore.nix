@@ -52,12 +52,12 @@ let
             }
           ];
 
-          UEFI.Drivers = [
-            { Path = "OpenRuntime.efi"; Enabled = true; }
-            { Path = "OpenCanopy.efi"; Enabled = true; }
-            { Path = "OpenLinuxBoot.efi"; Enabled = true; }
-            { Path = "OpenUsbKbDxe.efi"; Enabled = true; }
-          ];
+          UEFI.Drivers = {
+            "OpenRuntime.efi" = { Enabled = true; };
+            "OpenCanopy.efi" = { Enabled = true; };
+            "OpenLinuxBoot.efi" = { Enabled = true; };
+            "OpenUsbKbDxe.efi" = { Enabled = true; };
+          };
         };
       })
     ];
