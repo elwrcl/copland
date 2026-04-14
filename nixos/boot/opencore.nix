@@ -4,17 +4,15 @@ let
   ocPath = "/boot/EFI/OC";
   liminePath = "/boot/EFI/limine";
 
-  # OpenCore Sürücüleri için (GitHub'dan otomatik çekilir)
   ocPkg = pkgs.fetchzip {
     url = "https://github.com/acidanthera/OpenCorePkg/releases/download/1.0.1/OpenCore-1.0.1-RELEASE.zip";
     sha256 = "sha256-uKn0HlXQLDgZaYjRL3QcoqZ3iji0klz4pxYoLphP5rs=";
     stripRoot = false;
   };
 
-  # OpenCore İkonlar ve Fontlar (Saat/Görsellik için)
   ocResources = pkgs.fetchzip {
     url = "https://github.com/acidanthera/OcBinaryData/archive/refs/heads/master.zip";
-    sha256 = "sha256-RInN96Ie/lXvF72Ere8oGfW4Uu8W1Y6i9zD37nN+1+c=";
+    sha256 = "sha256-B5CABp0Y2dAVuw7185suaUuryl3iII4QNBVBttivQ7Y=";
   };
 in
 {
