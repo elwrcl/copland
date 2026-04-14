@@ -15,83 +15,42 @@ let
     sha256 = "sha256-B5CABp0Y2dAVuw7185suaUuryl3iII4QNBVBttivQ7Y=";
   };
 
-  ocConfig = inputs.oceanix.lib.makeOC {
+  ocConfig = inputs.oceanix.lib.OpenCoreConfig {
     inherit pkgs;
-    config = {
-      Booter.Quirks = {
-        AvoidRuntimeDefrag = true;
-        EnableWriteUnprotector = true;
-        ProvideCustomSlide = true;
-        SetupVirtualMap = true;
-      };
+    modules = [
+      ({ ... }: {
+        config.UEFI.Output.ProvideConsoleGop = true;
+        config.UEFI.Output.Resolution = "1366x768";
+        config.UEFI.Output.TextRenderer = "BuiltinGraphics";
+        config.Misc.Boot.PickerMode = "External";
+        config.Misc.Boot.PickerVariant = "Acidanthera\\Syrah";
+        config.Misc.Boot.PickerAttributes = 17;
+        config.Misc.Boot.Timeout = 10;
+        config.Misc.Security.SecureBootModel = "Disabled";
+        config.Misc.Security.ScanPolicy = 0;
+        config.UEFI.Quirks.DisableSecurityPolicy = true;
+        config.UEFI.Quirks.ReleaseUsbOwnership = true;
+        config.PlatformInfo.Automatic = true;
+        config.PlatformInfo.Generic.SystemProductName = "MacBookPro16,1";
+        config.PlatformInfo.Generic.SystemSerialNumber = "C02DF0Y0MD6N";
+        config.PlatformInfo.Generic.SystemUUID = "5445524E-A59B-4D8B-9B2F-9876543210AB";
 
-      Misc = {
-        Boot = {
-          PickerMode = "External";
-          PickerVariant = "Acidanthera\\Syrah";
-          PickerAttributes = 17;
-          ShowPicker = true;
-          Timeout = 10;
-        };
-        Security = {
-          AllowSetDefault = true;
-          AuthRestart = false;
-          BlacklistAppleUpdate = true;
-          DmgLoading = "Signed";
-          EnablePassword = false;
-          ExposeSensitiveData = 6;
-          HaltLevel = 2147483648;
-          ScanPolicy = 0;
-          SecureBootModel = "Disabled";
-          Vault = "Optional";
-        };
-        Entries = [
+        config.Misc.Entries = [
           {
             Name = "Limine";
             Enabled = true;
             Path = "PciRoot(0x0)/Pci(0x1f,0x2)/Sata(2,0,0)/HD(1,GPT,73ae5e9a-c31d-4787-9792-ee1843de3e9d,0x800,0x200000)/\\EFI\\limine\\BOOTX64.EFI";
           }
         ];
-      };
 
-      PlatformInfo = {
-        Automatic = true;
-        UpdateDataHub = true;
-        UpdateNVRAM = true;
-        UpdateSMBIOS = true;
-        UpdateSMBIOSMode = "Create";
-        Generic = {
-          AdviseFeatures = true;
-          SystemProductName = "MacBookPro16,1";
-          SystemSerialNumber = "C02DF0Y0MD6N";
-          SystemUUID = "5445524E-A59B-4D8B-9B2F-9876543210AB";
-        };
-      };
-
-      UEFI = {
-        ConnectDrivers = true;
-        Input = {
-          KeySupport = true;
-          KeySupportMode = "Auto";
-        };
-        Output = {
-          ProvideConsoleGop = true;
-          Resolution = "Max";
-          TextRenderer = "BuiltinGraphics";
-        };
-        Quirks = {
-          ReleaseUsbOwnership = true;
-          RequestBootVarRouting = true;
-          DisableSecurityPolicy = true;
-        };
-        Drivers = [
+        config.UEFI.Drivers = [
           { Path = "OpenRuntime.efi"; Enabled = true; }
           { Path = "OpenCanopy.efi"; Enabled = true; }
           { Path = "OpenLinuxBoot.efi"; Enabled = true; }
           { Path = "OpenUsbKbDxe.efi"; Enabled = true; }
         ];
-      };
-    };
+      })
+    ];
   };
 
   limineConf = pkgs.writeText "limine.conf" ''
@@ -100,7 +59,7 @@ let
     INTERFACE_RESOLUTION=1366x768
 
     :NixOS (Systemd-Boot)
-        PROTOCOL=efi_chainload
+        PROTOCOL=chainload
         PATH=boot:///EFI/systemd/systemd-bootx64.efi
   '';
 
@@ -108,13 +67,12 @@ in
 {
   system.activationScripts.opencoreConfig = {
     text = ''
-      echo "--- Kōpurando ---"
+      echo "--- Kopurando In1t ---"
       
       mkdir -p ${ocPath}/Drivers
       mkdir -p ${ocPath}/Resources
       mkdir -p ${liminePath}
 
-      # copying files
       cp -f ${ocPkg}/X64/EFI/OC/Drivers/*.efi ${ocPath}/Drivers/
       cp -rf ${ocResources}/Resources/* ${ocPath}/Resources/
       
@@ -122,11 +80,9 @@ in
         cp -f ${pkgs.limine}/share/limine/BOOTX64.EFI ${liminePath}/BOOTX64.EFI
       fi
 
-      # .plists
-      cp -f ${ocConfig}/config.plist ${ocPath}/config.plist
+      cp -f ${ocConfig.configPlist} ${ocPath}/config.plist
       cp -f ${limineConf} ${liminePath}/limine.conf
 
-      # bios 
       if ! ${pkgs.efibootmgr}/bin/efibootmgr | grep -q "OpenCore_Copland"; then
         ${pkgs.efibootmgr}/bin/efibootmgr -c -d /dev/sda -p 1 -L "OpenCore_Copland" -l "\EFI\OC\OpenCore.efi"
       fi
