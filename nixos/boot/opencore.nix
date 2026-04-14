@@ -24,7 +24,7 @@ let
     pkgs = oceanixPkgs;
     modules = [
       ({ ... }: {
-        oceanix.opencore.settings = {   
+        oceanix.opencore.settings = {
           UEFI.Output.ProvideConsoleGop = true;
           UEFI.Output.Resolution = "1366x768";
           UEFI.Output.TextRenderer = "BuiltinGraphics";
