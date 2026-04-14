@@ -80,7 +80,9 @@ in
         cp -f ${pkgs.limine}/share/limine/BOOTX64.EFI ${liminePath}/BOOTX64.EFI
       fi
 
-      cp -f ${ocConfig.configPlist} ${ocPath}/config.plist
+      OC_PLIST_PATH=$(find ${ocConfig.efiPackage} -name "config.plist" | head -n 1)
+      cp -f "$OC_PLIST_PATH" ${ocPath}/config.plist
+      
       cp -f ${limineConf} ${liminePath}/limine.conf
 
       if ! ${pkgs.efibootmgr}/bin/efibootmgr | grep -q "OpenCore_Copland"; then
