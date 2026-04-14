@@ -4,7 +4,7 @@
   services.cloudflare-warp.enable = false;
 
   services.zapret = {
-    enable = false;
+    enable = true;
     params = [
       "--filter-tcp=80"
       "--dpi-desync=fake,multisplit"
