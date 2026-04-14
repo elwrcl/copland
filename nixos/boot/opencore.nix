@@ -18,17 +18,19 @@ in
 {
   system.activationScripts.opencoreConfig = {
     text = ''
-      CUR_KERNEL=$(ls /boot/EFI/nixos/*-bzImage.efi | head -n 1 | xargs basename)
-      CUR_INITRD=$(ls /boot/EFI/nixos/*-initrd.efi | head -n 1 | xargs basename)
             echo "--- Copland Bootloader ---"
+      
             mkdir -p ${ocPath}/Drivers
             mkdir -p ${ocPath}/Resources
             mkdir -p ${liminePath}
+
             cp -f ${ocPkg}/X64/EFI/OC/Drivers/*.efi ${ocPath}/Drivers/
             cp -rf ${ocResources}/Resources/* ${ocPath}/Resources/
+      
             if [ -f ${pkgs.limine}/share/limine/BOOTX64.EFI ]; then
               cp -f ${pkgs.limine}/share/limine/BOOTX64.EFI ${liminePath}/BOOTX64.EFI
             fi
+
             cat <<EOF > ${liminePath}/limine.conf
       TIMEOUT=5
       GRAPHICS=yes
@@ -39,7 +41,6 @@ in
           KERNEL_PATH=boot:///EFI/nixos/j2rky4bwgy6s1d5j15pvz4yiprhm96j2-linux-cachyos-latest-lto-x86_64-v2-6.19.11-bzImage.efi
           MODULE_PATH=boot:///EFI/nixos/bfy4s8c3lhhdqqpw0ys5gik4vs6hyjlz-initrd-linux-cachyos-latest-lto-x86_64-v2-6.19.11-initrd.efi
           CMDLINE=preempt=full i915.enable_fbc=1 mitigations=off "i915.enable_fbc=1" "usbcore.autosuspend=-1" "transparent_hugepage=always"
-  
       EOF
 
             cat <<EOF > ${ocPath}/config.plist
@@ -64,8 +65,8 @@ in
               <dict>
                   <key>PickerMode</key><string>External</string>
                   <key>PickerAttributes</key><integer>17</integer>
-                  <key>Resolution</key><string>1366x768</string>
                   <key>Timeout</key><integer>5</integer>
+                  <key>ShowPicker</key><true/>
               </dict>
               <key>Entries</key>
               <array>
@@ -89,11 +90,17 @@ in
               <dict>
                   <key>KeySupport</key><true/>
                   <key>KeySupportMode</key><string>Auto</string>
-                  <key>ReleaseUsbOwnership</key><true/>
+              </dict>
+              <key>Output</key>
+              <dict>
+                  <key>ProvideConsoleGop</key><true/>
+                  <key>Resolution</key><string>1366x768</string>
+                  <key>TextRenderer</key><string>BuiltinGraphics</string>
               </dict>
               <key>Quirks</key>
               <dict>
-                  <key>ProvideConsoleGop</key><true/> </dict>
+                  <key>ReleaseUsbOwnership</key><true/>
+              </dict>
               <key>Drivers</key>
               <array>
                   <string>OpenRuntime.efi</string>
@@ -102,7 +109,7 @@ in
                   <string>OpenUsbKbDxe.efi</string>
               </array>
           </dict>
-          </dict>
+      </dict>
       </plist>
       EOF
 
