@@ -4,12 +4,6 @@ let
   ocPath = "/boot/EFI/OC";
   liminePath = "/boot/EFI/limine";
 
-  ocPkg = pkgs.fetchzip {
-    url = "https://github.com/acidanthera/OpenCorePkg/releases/download/1.0.1/OpenCore-1.0.1-RELEASE.zip";
-    sha256 = "sha256-uKn0HlXQLDgZaYjRL3QcoqZ3iji0klz4pxYoLphP5rs=";
-    stripRoot = false;
-  };
-
   ocResources = pkgs.fetchzip {
     url = "https://github.com/acidanthera/OcBinaryData/archive/refs/heads/master.zip";
     sha256 = "sha256-B5CABp0Y2dAVuw7185suaUuryl3iII4QNBVBttivQ7Y=";
@@ -80,14 +74,15 @@ in
     text = ''
       echo "--- Kopurando In1t ---"
       
-      mkdir -p ${ocPath}/Drivers
-      mkdir -p ${ocPath}/Resources
       mkdir -p ${liminePath}
 
-      cp -f ${ocPkg}/X64/EFI/OC/Drivers/*.efi ${ocPath}/Drivers/
+      rm -rf ${ocPath}
+      mkdir -p ${ocPath}
+
+      cp -rf ${ocConfig.efiPackage}/EFI/OC/* ${ocPath}/
+
+      mkdir -p ${ocPath}/Resources
       cp -rf ${ocResources}/Resources/* ${ocPath}/Resources/
-    
-      cp -f ${ocConfig.efiPackage}/EFI/OC/config.plist ${ocPath}/config.plist
       
       if [ -f ${pkgs.limine}/share/limine/BOOTX64.EFI ]; then
         cp -f ${pkgs.limine}/share/limine/BOOTX64.EFI ${liminePath}/BOOTX64.EFI
