@@ -3,26 +3,46 @@
 let
   ocPath = "/boot/EFI/OC";
   liminePath = "/boot/EFI/limine";
-  ocDrivers = "${inputs.oceanix.packages.${pkgs.system}.opencore}/EFI/OC/Drivers";
+
+  # OpenCore Sürücüleri için (GitHub'dan otomatik çekilir)
+  ocPkg = pkgs.fetchzip {
+    url = "https://github.com/acidanthera/OpenCorePkg/releases/download/1.0.1/OpenCore-1.0.1-RELEASE.zip";
+    sha256 = "sha256-uKn0HlXQLDgZaYjRL3QcoqZ3iji0klz4pxYoLphP5rs=";
+    stripRoot = false;
+  };
+
+  # OpenCore İkonlar ve Fontlar (Saat/Görsellik için)
+  ocResources = pkgs.fetchzip {
+    url = "https://github.com/acidanthera/OcBinaryData/archive/refs/heads/master.zip";
+    sha256 = "sha256-RInN96Ie/lXvF72Ere8oGfW4Uu8W1Y6i9zD37nN+1+c=";
+  };
 in
 {
   system.activationScripts.opencoreConfig = {
     text = ''
+      CUR_KERNEL=$(ls /boot/EFI/nixos/*-bzImage.efi | head -n 1 | xargs basename)
+      CUR_INITRD=$(ls /boot/EFI/nixos/*-initrd.efi | head -n 1 | xargs basename)
             echo "--- Copland Bootloader ---"
-      
             mkdir -p ${ocPath}/Drivers
+            mkdir -p ${ocPath}/Resources
             mkdir -p ${liminePath}
-
-            # EKSİK SÜRÜCÜLERİ BURADA MANUEL KOPYALIYORUZ
-            cp -f ${ocDrivers}/OpenCanopy.efi ${ocPath}/Drivers/
-            cp -f ${ocDrivers}/OpenUsbKbDxe.efi ${ocPath}/Drivers/
-            # Bunlar sende vardı ama garanti olsun diye üzerinden geçiyoruz
-            cp -f ${ocDrivers}/OpenRuntime.efi ${ocPath}/Drivers/
-            cp -f ${ocDrivers}/OpenLinuxBoot.efi ${ocPath}/Drivers/
-
+            cp -f ${ocPkg}/X64/EFI/OC/Drivers/*.efi ${ocPath}/Drivers/
+            cp -rf ${ocResources}/Resources/* ${ocPath}/Resources/
             if [ -f ${pkgs.limine}/share/limine/BOOTX64.EFI ]; then
               cp -f ${pkgs.limine}/share/limine/BOOTX64.EFI ${liminePath}/BOOTX64.EFI
             fi
+            cat <<EOF > ${liminePath}/limine.conf
+      TIMEOUT=5
+      GRAPHICS=yes
+      INTERFACE_RESOLUTION=1366x768
+
+      :NixOS (CachyOS)
+          PROTOCOL=linux
+          KERNEL_PATH=boot:///EFI/nixos/j2rky4bwgy6s1d5j15pvz4yiprhm96j2-linux-cachyos-latest-lto-x86_64-v2-6.19.11-bzImage.efi
+          MODULE_PATH=boot:///EFI/nixos/bfy4s8c3lhhdqqpw0ys5gik4vs6hyjlz-initrd-linux-cachyos-latest-lto-x86_64-v2-6.19.11-initrd.efi
+          CMDLINE=preempt=full i915.enable_fbc=1 mitigations=off "i915.enable_fbc=1" "usbcore.autosuspend=-1" "transparent_hugepage=always"
+  
+      EOF
 
             cat <<EOF > ${ocPath}/config.plist
       <?xml version="1.0" encoding="UTF-8"?>
@@ -35,20 +55,8 @@ in
               <dict>
                   <key>AvoidRuntimeDefrag</key><true/>
                   <key>EnableWriteUnprotector</key><true/>
-                  <key>SetupVirtualMap</key><true/>
                   <key>ProvideCustomSlide</key><true/>
-              </dict>
-          </dict>
-
-          <key>DeviceProperties</key>
-          <dict>
-              <key>Add</key>
-              <dict>
-                  <key>PciRoot(0x0)/Pci(0x2,0x0)</key>
-                  <dict>
-                      <key>AAPL,ig-platform-id</key><data>AwBmAQ==</data>
-                      <key>framebuffer-patch-enable</key><data>AQAAAA==</data>
-                  </dict>
+                  <key>SetupVirtualMap</key><true/>
               </dict>
           </dict>
 
@@ -58,6 +66,7 @@ in
               <dict>
                   <key>PickerMode</key><string>External</string>
                   <key>PickerAttributes</key><integer>17</integer>
+                  <key>Resolution</key><string>1366x768</string>
                   <key>Timeout</key><integer>5</integer>
               </dict>
               <key>Entries</key>
@@ -76,27 +85,6 @@ in
               </dict>
           </dict>
 
-          <key>NVRAM</key>
-          <dict>
-              <key>Add</key>
-              <dict>
-                  <key>7C436110-AB2A-4BBB-A880-FE41995C9F82</key>
-                  <dict>
-                      <key>boot-args</key>
-                      <string>-v amfi_get_out_of_my_way=1 -no_compat_check ipc_control_port_options=0</string>
-                  </dict>
-              </dict>
-          </dict>
-
-          <key>PlatformInfo</key>
-          <dict>
-              <key>Generic</key>
-              <dict>
-                  <key>SystemProductName</key><string>MacBookPro16,1</string>
-                  <key>AdviseFeatures</key><true/>
-              </dict>
-          </dict>
-
           <key>UEFI</key>
           <dict>
               <key>Input</key>
@@ -105,6 +93,9 @@ in
                   <key>KeySupportMode</key><string>Auto</string>
                   <key>ReleaseUsbOwnership</key><true/>
               </dict>
+              <key>Quirks</key>
+              <dict>
+                  <key>ProvideConsoleGop</key><true/> </dict>
               <key>Drivers</key>
               <array>
                   <string>OpenRuntime.efi</string>
@@ -113,9 +104,13 @@ in
                   <string>OpenUsbKbDxe.efi</string>
               </array>
           </dict>
-      </dict>
+          </dict>
       </plist>
       EOF
+
+            if ! ${pkgs.efibootmgr}/bin/efibootmgr | grep -q "OpenCore_Copland"; then
+              ${pkgs.efibootmgr}/bin/efibootmgr -c -d /dev/sda -p 1 -L "OpenCore_Copland" -l "\EFI\OC\OpenCore.efi"
+            fi
     '';
   };
 }
