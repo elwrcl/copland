@@ -14,11 +14,13 @@
     LC_TIME = "tr_TR.UTF-8";
   };
   services.timesyncd.enable = false;
+
   services.chrony = {
     enable = true;
     extraConfig = ''
       makestep 1.0 -1
-      initstepslew 30 time.cloudflare.com time.google.com
+      server 162.159.200.1 iburst
+      server 216.239.35.0 iburst
       server time.cloudflare.com iburst
       server time.google.com iburst
     '';
