@@ -36,12 +36,6 @@ let
             SetupDelay = 0;
           };
 
-          UEFI.Pointer = {
-            PointerPollMin = 10;
-            PointerPollMax = 80;
-            PointerPollMask = -1;
-          };
-
           Misc.Boot.PickerMode = "External";
           Misc.Boot.PickerVariant = "Acidanthera\\Syrah";
           Misc.Boot.PickerAttributes = 17;
