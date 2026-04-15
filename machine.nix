@@ -29,4 +29,15 @@ in
     "/share/icons"
     "/share/mime"
   ];
+
+  fonts = {
+    packages = with pkgs; [
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.caskaydia-cove
+      noto-fonts-cjk-sans
+      inputs.apple-fonts.packages.${system}.sf-pro
+      inputs.apple-fonts.packages.${system}.sf-mono
+    ];
+    fontDir.enable = true;
+  };
 }
