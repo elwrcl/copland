@@ -4,7 +4,8 @@ let
   ocPath = "/boot/EFI/OC";
 
   oceanixPkgs = import pkgs.path {
-    inherit (pkgs) system config;
+    hostPlatform = pkgs.stdenv.hostPlatform;
+    inherit (pkgs) config;
     overlays = [ inputs.oceanix.overlays.default ];
   };
 
