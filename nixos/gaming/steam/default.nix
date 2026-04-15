@@ -11,6 +11,7 @@
         STEAM_USE_PORTAL = "1";
         GTK_USE_PORTAL = "1";
         PRESSURE_VESSEL_VERBOSE = "0";
+        STEAM_RUNTIME_PREFER_HOST_LIBRARIES = "0";
       };
       extraPkgs =
         p: with p; [
@@ -35,7 +36,6 @@
           stdenv.cc.cc.lib
           gamemode
           zenity
-          # pressure-vessel için gerekli
           glib
           dbus
           at-spi2-atk

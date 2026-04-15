@@ -16,6 +16,7 @@
       "x-scheme-handler/https" = "zen-beta.desktop";
       "x-scheme-handler/about" = "zen-beta.desktop";
       "x-scheme-handler/unknown" = "zen-beta.desktop";
+      "x-scheme-handler/steam" = "steam.desktop";
 
       # media
       "image/png" = "org.gnome.Loupe.desktop";
