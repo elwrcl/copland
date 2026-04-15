@@ -18,9 +18,15 @@
     enable = true;
     extraConfig = ''
       makestep 1.0 -1
+      initstepslew 30 time.cloudflare.com time.google.com
       server time.cloudflare.com iburst
       server time.google.com iburst
     '';
+  };
+
+  systemd.services.chronyd = {
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
   };
   console.keyMap = "trq";
   system.stateVersion = "25.05";
