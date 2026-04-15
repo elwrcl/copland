@@ -49,7 +49,6 @@
     {
       nixosConfigurations = {
         copland = nixpkgs.lib.nixosSystem {
-          system = system;
           specialArgs = {
             inherit inputs system;
             oceanix = inputs.oceanix;
@@ -58,6 +57,7 @@
           };
 
           modules = [
+            { nixpkgs.hostPlatform = system; }
             chaotic.nixosModules.default
             home-manager.nixosModules.home-manager
             {
