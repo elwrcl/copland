@@ -29,7 +29,7 @@ let
             AudioSupport = true;
             ResetTrafficClass = true;
             DisconnectHda = false;
-            MaximumGain = -15;
+            MaximumGain = -30;
             MinimumAssistGain = -30;
             MinimumAudibleGain = -128;
             PlayChime = "Enabled";
