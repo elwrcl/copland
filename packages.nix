@@ -4,17 +4,119 @@ let
     avahi = pkgs.avahi.override { withLibdnssdCompat = true; };
   };
 in
-with pkgs; {
+with pkgs;
+{
   system = [
-    # Gaming
+    # diagnostic
+    dmidecode
+    lshw
+    pciutils
+    usbutils
+    hwinfo
+    efibootmgr
+    cpuid
+    smartmontools
+    gsmartcontrol
+    lm_sensors
+    ddcutil
+    brightnessctl
+    libmtp
+    jmtpfs
+
+    # core utilities
+    btop
+    fastfetch
+    wget
+    curl
+    unzip
+    zip
+    p7zip
+    rar
+    dos2unix
+    jq
+    parted
+    libqalculate
+    qalculate-gtk
+    direnv
+    cachix
+    ollama
+    antigravity
+
+    # network
+    zapret
+    autossh
+    glib-networking
+
+    # gaming
     heroic
     bottles
     prismlauncher
+    virt-manager
+    libvirt
+    qemu
+    wine
 
-    # Networking
-    zapret
+    # dev tools
+    git
+    gnumake
+    pkg-config
+    binutils
+    openssl
+    openssl.dev
+    sqlite
+    hidapi
+    solaar
+    xdotool
+    cargo-tauri
+    trunk
+    dioxus-cli
+    picotool
+    stripe-cli
+    nil
+    nixpkgs-fmt
 
-    # Hardware
+    # languages
+    gcc
+    rustup
+    python3
+    jdk
+    go
+    zig
+    odin
+    uv
+    ghc
+    cabal-install
+    lua
+    luajit
+    zlib
+    glibc
+    glib
+    libGL
+    glm
+
+    # desktop environment
+    waybar
+    wofi
+    fuzzel
+    swaylock
+    swayidle
+    eww
+    bibata-cursors
+    flatpak
+    feh
+    wl-clipboard
+    grim
+    slurp
+    imagemagick
+    tesseract
+    wf-recorder
+    shared-mime-info
+
+    # graphics & display
+    mesa
+    adwaita-qt
+    adwaita-qt6
+    gsettings-desktop-schemas
     kdePackages.qtmultimedia
     qt6Packages.qtbase
     qt6Packages.qttools
@@ -22,96 +124,26 @@ with pkgs; {
     qt6Packages.qtdeclarative
     qt6Packages.qtwayland
     qt6Packages.qtwebsockets
-    gsettings-desktop-schemas
-    adwaita-qt
-    adwaita-qt6
-    mesa
-    cava
-    direnv
-
-    # MTP support for Android devices
-    libmtp
-    jmtpfs
-    rar
-
-    # Iphone stuff
-    libimobiledevice
-    ifuse
-    usbmuxd
-    uxplay-fixed
-
-    # Virtualization
-    virt-manager
-    libvirt
-    qemu
-
-    # Desktop
-    bibata-cursors
-    flatpak
-    fuzzel
-    swaylock
-    swayidle
-    feh
-    spotatui
-    whatsapp-electron
-    ffmpeg
-    sioyek
-    gsmartcontrol
-    smartmontools
-    eww
-    qbittorrent
-    localsend
-    jellyfin-media-player
-    parted
-    ollama
-    alacritty
-    antigravity
-
-    # Development tools
-    git
-    hidapi
-    cachix
-    dos2unix
-    alsa-lib
-    gnumake
-    unzip
-    luajit
-    btop
-    fastfetch
-    ddcutil
-    brightnessctl
-    lm_sensors
-    fish
-    openssl
-    openssl.dev
-    solaar
-    aubio
-    docker-compose
-    swappy
-    cargo-tauri
-    trunk
-    libqalculate
-    material-symbols
-    nerd-fonts.caskaydia-cove
-    kitty
-    slack
-    dioxus-cli
-    sqlite
-    picotool
-    stripe-cli
-    chromium
-    autossh
-    glib-networking
     libsoup_3
     gtk3
     webkitgtk_4_1
-    xdotool
-    easyeffects
-    nil
-    nixpkgs-fmt
-    direnv
 
-    # Editors
+    # media
+    mpv
+    ffmpeg
+    yt-dlp
+    obs-studio
+    cava
+    easyeffects
+    pavucontrol
+    playerctl
+    pamixer
+    alsa-utils
+    alsa-lib
+    aubio
+    spotatui
+
+    # editors
     vim
     micro
     neovim
@@ -119,39 +151,41 @@ with pkgs; {
     vscode
     (zed-editor.override { withGLES = true; })
 
-    # Languages
-    uv
-    pkg-config
-    odin
-    ghc
-    cabal-install
-    go
-    rustup
-    gcc
-    binutils
-    libGL
-    wget
-    glm
-    glib
-    glibc
-    zlib
-    zig
-    lua
+    # apps
+    firefox
+    chromium
+    thunderbird
+    telegram-desktop
+    discord
+    equibop
+    slack
+    whatsapp-electron
+    ghostty
+    alacritty
+    kitty
+    nautilus
+    loupe
+    spacedrive
+    onlyoffice-desktopeditors
+    sioyek
+    qbittorrent
+    localsend
+    jellyfin-media-player
+    calibre
+    ani-cli
+    blender
 
-    # Hyprland
-    waybar
-    wofi
+    # mobile
+    libimobiledevice
+    ifuse
+    usbmuxd
+    uxplay-fixed
 
-    # Desktop tools
-    obs-studio
-    tesseract
-    jq
-    wf-recorder
-    yt-dlp
-    wl-clipboard
-    grim
-    slurp
-    imagemagick
+    # fonts & icons
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.caskaydia-cove
+    noto-fonts-cjk-sans
+    material-symbols
     nixos-icons
     papirus-icon-theme
     adwaita-icon-theme
@@ -160,35 +194,6 @@ with pkgs; {
     pantheon.elementary-icon-theme
     tango-icon-theme
     arc-icon-theme
-    shared-mime-info
-    qalculate-gtk
-    mpv
-    equibop
-    discord
-    pavucontrol
-    playerctl
-    pamixer
-    alsa-utils
-    zip
-    p7zip
-    calibre
-    ani-cli
     gnome-themes-extra
-
-    # Fonts
-    noto-fonts-cjk-sans
-    nerd-fonts.jetbrains-mono
-
-    # Applications
-    thunderbird
-    firefox
-    telegram-desktop
-    ghostty
-    onlyoffice-desktopeditors
-    nautilus
-    loupe
-    spacedrive
-    wine
-    blender
   ];
 }
