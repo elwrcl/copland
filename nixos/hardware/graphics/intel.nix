@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
 let
   wayland-intel-vaapi-driver = pkgs.intel-vaapi-driver.overrideAttrs (oldAttrs: {

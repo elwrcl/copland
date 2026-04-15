@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, system, ... }:
+{
+  pkgs,
+  inputs,
+  system,
+  ...
+}:
 
 {
   imports = [ ./hyprland.nix ];
@@ -80,13 +85,42 @@
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
       gtk-application-prefer-dark-theme = true;
+      icon-theme = "Papirus-Dark";
+      cursor-theme = "Bibata-Modern-Classic";
+      cursor-size = 24;
     };
     "org/gnome/nautilus/preferences" = {
       default-folder-viewer = "icon-view";
+      show-hidden-files = false;
+    };
+    "org/gtk/settings/file-chooser" = {
+      sort-directories-first = true;
     };
   };
-  xdg.configFile."xdg-desktop-portal/portals/gtk.portal".source =
-    "${pkgs.xdg-desktop-portal-gtk}/share/xdg-desktop-portal/portals/gtk.portal";
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome-themes-extra;
+    };
+    iconTheme = {
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
+    };
+    cursorTheme = {
+      name = "Bibata-Modern-Classic";
+      package = pkgs.bibata-cursors;
+      size = 24;
+    };
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+    gtk4.theme = null;
+  };
+
   qt = {
     enable = true;
     platformTheme.name = "gtk3";
@@ -96,4 +130,3 @@
     };
   };
 }
-

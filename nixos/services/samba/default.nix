@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   systemd.tmpfiles.rules = [
@@ -36,7 +41,7 @@
       };
 
       "HDD" = {
-        path = "/mnt/hdd";
+        path = "/mnt/HDD";
         browseable = "yes";
         public = "yes";
         "read only" = "no";
