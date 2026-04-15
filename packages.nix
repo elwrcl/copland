@@ -22,8 +22,6 @@ with pkgs;
     brightnessctl
     libmtp
     jmtpfs
-
-    # core utilities
     btop
     fastfetch
     wget
