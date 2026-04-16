@@ -99,7 +99,6 @@
     cachix
     hidapi
     btop
-    luajit
 
     vulkan-tools
     libva-utils
