@@ -1,10 +1,7 @@
 {
   pkgs,
-  inputs,
-  system,
   ...
 }:
-
 {
   imports = [
     ./hyprland.nix
