@@ -131,6 +131,7 @@ in
         fi
       else
         echo "Error: Could not find mount point for /boot!"
+        exit 1
       fi
     '';
   };

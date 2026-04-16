@@ -8,6 +8,7 @@
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     oceanix.url = "github:LEXUGE/oceanix";
     copetch.url = "github:elwrcl/copetch";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,32 +38,11 @@
     }:
     let
       system = "x86_64-linux";
-
-      chaoticOverlay = chaotic.overlays.default;
-      cachyosKernelOverlay = nix-cachyos-kernel.overlays.default;
-
-      copetchOverlay = final: prev: {
-        copetch = inputs.copetch.packages.${system}.default;
-      };
-
-      gtkPortalOverlay = final: prev: {
-        xdg-desktop-portal-gtk = prev.xdg-desktop-portal-gtk.overrideAttrs (old: {
-          postInstall = (old.postInstall or "") + ''
-            substituteInPlace $out/share/xdg-desktop-portal/portals/gtk.portal \
-              --replace "UseIn=gnome" "UseIn=gnome;Hyprland"
-          '';
-        });
-      };
     in
     {
       nixosConfigurations = {
         copland = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs system;
-            oceanix = inputs.oceanix;
-            zen-browser = inputs.zen-browser;
-            nix-cachyos-kernel = nix-cachyos-kernel;
-          };
+          specialArgs = { inherit inputs system; };
 
           modules = [
             { nixpkgs.hostPlatform = system; }
@@ -70,14 +50,14 @@
             home-manager.nixosModules.home-manager
             {
               nixpkgs.overlays = [
-                chaoticOverlay
-                cachyosKernelOverlay
-                copetchOverlay
-                gtkPortalOverlay
+                chaotic.overlays.default
+                nix-cachyos-kernel.overlays.default
+                (final: prev: {
+                  copetch = inputs.copetch.packages.${system}.default;
+                })
               ];
               nixpkgs.config.allowUnfree = true;
-            }
-            {
+
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;

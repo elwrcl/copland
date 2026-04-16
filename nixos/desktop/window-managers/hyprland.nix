@@ -5,30 +5,31 @@
     enable = true;
     xwayland.enable = true;
   };
+
   xdg.portal = {
     enable = true;
     xdgOpenUsePortal = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config.hyprland.default = lib.mkForce [
+      "hyprland"
+      "gtk"
     ];
-    config = {
-      common = {
-        default = [
-          "hyprland"
-          "gtk"
-        ];
-      };
+  };
+
+  services = {
+    dbus.enable = true;
+    pipewire = {
+      enable = true;
+      pulse.enable = true;
+      wireplumber.enable = true;
+    };
+    gnome = {
+      gnome-keyring.enable = true;
+      gnome-settings-daemon.enable = lib.mkDefault false;
     };
   };
-  services.dbus.enable = true;
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
-    wireplumber.enable = true;
-  };
+
   security.polkit.enable = true;
-  services.gnome.gnome-keyring.enable = true;
-  services.gnome.gnome-settings-daemon.enable = lib.mkDefault false;
 
   environment.systemPackages = with pkgs; [
     glib

@@ -19,6 +19,7 @@
     x11.enable = true;
   };
 
+  # Alternatifsiz tek shell.
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -37,25 +38,19 @@
       window-padding-y = 10;
     };
   };
-
   xdg.configFile = {
     "fastfetch".source = ./dots/fastfetch;
-    "fish/conf.d".source = ./dots/fish/conf.d;
   };
-
   home.packages = with pkgs; [
     eza
     bat
-    fzf
     fd
     fastfetch
-    starship
     vulkan-tools
     libva-utils
     mesa-demos
     intel-gpu-tools
     clinfo
-    zoxide
     trash-cli
     rsync
   ];
@@ -64,6 +59,7 @@
   programs.fzf.enable = true;
   programs.zoxide.enable = true;
   programs.home-manager.enable = true;
+
   fonts.fontconfig.enable = true;
   services.kdeconnect.enable = true;
 
@@ -78,8 +74,6 @@
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
       gtk-application-prefer-dark-theme = true;
-      cursor-theme = "Bibata-Modern-Classic";
-      cursor-size = 24;
     };
     "org/gnome/nautilus/preferences" = {
       default-folder-viewer = "icon-view";
@@ -89,6 +83,7 @@
       sort-directories-first = true;
     };
   };
+
   gtk = {
     enable = true;
     theme = {
@@ -98,11 +93,6 @@
     iconTheme = {
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
-    };
-    cursorTheme = {
-      name = "Bibata-Modern-Classic";
-      package = pkgs.bibata-cursors;
-      size = 24;
     };
     gtk3.extraConfig = {
       gtk-application-prefer-dark-theme = 1;

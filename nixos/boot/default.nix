@@ -5,7 +5,7 @@
     ./opencore.nix
   ];
 
-  environment.systemPackages = [ pkgs.limine pkgs.efibootmgr ];
+  environment.systemPackages = [ pkgs.efibootmgr ];
 
   boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto-x86_64-v2;
 
