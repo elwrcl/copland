@@ -6,7 +6,10 @@
 }:
 
 {
-  imports = [ ./hyprland.nix ];
+  imports = [
+    ./hyprland.nix
+    ./niri.nix
+  ];
 
   home.username = "elars";
   home.homeDirectory = "/home/elars";
