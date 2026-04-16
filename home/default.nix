@@ -8,7 +8,6 @@
 {
   imports = [
     ./hyprland.nix
-    ./niri.nix
   ];
 
   home.username = "elars";
@@ -52,7 +51,6 @@
     bat
     fzf
     fd
-    micro
     fastfetch
     starship
     vulkan-tools
@@ -60,14 +58,9 @@
     mesa-demos
     intel-gpu-tools
     clinfo
-    nerd-fonts.symbols-only
     zoxide
     trash-cli
     rsync
-
-    inputs.apple-fonts.packages.${system}.sf-pro
-    inputs.apple-fonts.packages.${system}.sf-mono
-    nerd-fonts.jetbrains-mono
   ];
 
   programs.starship.enable = true;
@@ -94,7 +87,7 @@
     };
     "org/gnome/nautilus/preferences" = {
       default-folder-viewer = "icon-view";
-      show-hidden-files = false;
+      show-hidden-files = true;
     };
     "org/gtk/settings/file-chooser" = {
       sort-directories-first = true;
@@ -107,7 +100,7 @@
       package = pkgs.gnome-themes-extra;
     };
     iconTheme = {
-      name = "Papirus-Dark";
+      name = "adwaita-dark";
       package = pkgs.papirus-icon-theme;
     };
     cursorTheme = {
