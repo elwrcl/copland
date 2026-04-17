@@ -24,6 +24,7 @@ with pkgs;
 
     # hrd
     ddcutil
+    libsecret
     brightnessctl
     lm_sensors
     smartmontools
