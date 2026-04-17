@@ -12,5 +12,6 @@
     ./fwupd
     ./samba
     ./performance
+    ./ollama
   ];
 }
