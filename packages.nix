@@ -30,5 +30,9 @@ with pkgs;
     smartmontools
     gsmartcontrol
     parted
+
+    # qml/qt6
+    qt6.full
+    libclang
   ];
 }
