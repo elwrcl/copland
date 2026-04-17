@@ -42,6 +42,7 @@
   programs.fzf.enable = true;
   programs.zoxide.enable = true;
   programs.home-manager.enable = true;
+
   qt = {
     enable = true;
     platformTheme.name = "gtk3";
@@ -49,6 +50,18 @@
       name = "adwaita-dark";
       package = pkgs.adwaita-qt;
     };
+  };
+
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome-themes-extra;
+    };
+  };
+
+  home.sessionVariables = {
+    GTK_THEME = "Adwaita-dark";
   };
 
   xdg.configFile = {
@@ -74,6 +87,7 @@
   services.kdeconnect.enable = true;
 
   home.packages = with pkgs; [
+
     # cli
     eza
     bat
@@ -206,6 +220,5 @@
     discord
     slack
     solaar
-
   ];
 }
