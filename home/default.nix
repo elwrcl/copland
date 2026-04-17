@@ -73,6 +73,10 @@
     enable = true;
     defaultApplications = {
       "inode/directory" = [ "org.gnome.Nautilus.desktop" ];
+      "x-scheme-handler/http" = [ "zen-beta" ];
+      "x-scheme-handler/https" = [ "zen-beta" ];
+      "x-scheme-handler/about" = [ "zen-beta" ];
+      "x-scheme-handler/unknown" = [ "zen-beta" ];
     };
   };
   dconf.settings = {
