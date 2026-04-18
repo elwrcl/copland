@@ -4,12 +4,10 @@
   users.users.elars = {
     isNormalUser = true;
     description = "elars";
-    initialPassword = "1111";
     extraGroups = [
       "networkmanager"
       "wheel"
       "docker"
-      "plugdev"
       "video"
       "audio"
       "lp"
@@ -18,12 +16,14 @@
     ];
     shell = pkgs.zsh;
   };
+
   programs.nh = {
     enable = true;
     clean.enable = true;
     clean.extraArgs = "--keep-since 4d --keep 3";
     flake = "/home/elars/copland";
   };
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
