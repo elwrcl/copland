@@ -18,14 +18,14 @@
   ];
 
   boot.loader = {
-    timeout = 2;
+    timeout = 5;
     efi = {
       canTouchEfiVariables = true;
       efiSysMountPoint = "/boot";
     };
     systemd-boot = {
       enable = true;
-      configurationLimit = 5;
+      configurationLimit = 10;
     };
   };
 }
