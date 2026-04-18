@@ -37,7 +37,6 @@ with pkgs;
     # qml/qt6
     qt6.qtbase
     qt6.qtdeclarative
-    qt6.qtquickcontrols2
     qt6.qtwayland
     libclang
   ];
