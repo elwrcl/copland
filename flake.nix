@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     oceanix.url = "github:LEXUGE/oceanix";
@@ -31,7 +30,6 @@
     inputs@{
       self,
       nixpkgs,
-      chaotic,
       home-manager,
       nix-cachyos-kernel,
       ...
@@ -46,11 +44,9 @@
 
           modules = [
             { nixpkgs.hostPlatform = system; }
-            chaotic.nixosModules.default
             home-manager.nixosModules.home-manager
             {
               nixpkgs.overlays = [
-                chaotic.overlays.default
                 nix-cachyos-kernel.overlays.default
                 (final: prev: {
                   copetch = inputs.copetch.packages.${system}.default;
