@@ -58,12 +58,16 @@
       name = "Adwaita-dark";
       package = pkgs.gnome-themes-extra;
     };
-    gtk4.theme = null;
+    gtk4 = {
+      theme = {
+        name = "Adwaita-dark";
+        package = pkgs.gnome-themes-extra;
+      };
+    };
   };
 
   home.sessionVariables = {
-    GTK_THEME = "Adwaita-dark";
-    BROWSER = "zen-beta";
+    BROWSER = "zen-beta.desktop";
   };
 
   xdg.configFile = {
@@ -74,35 +78,37 @@
     enable = true;
     defaultApplications = {
       "inode/directory" = [ "org.gnome.Nautilus.desktop" ];
-      "x-scheme-handler/http" = [ "zen-beta" ];
-      "x-scheme-handler/https" = [ "zen-beta" ];
-      "x-scheme-handler/about" = [ "zen-beta" ];
-      "x-scheme-handler/unknown" = [ "zen-beta" ];
+      "x-scheme-handler/http" = [ "zen-beta.desktop" ];
+      "x-scheme-handler/https" = [ "zen-beta.desktop" ];
+      "x-scheme-handler/about" = [ "zen-beta.desktop" ];
+      "x-scheme-handler/unknown" = [ "zen-beta.desktop" ];
     };
   };
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
       gtk-application-prefer-dark-theme = true;
+      gtk-theme = "Adwaita-dark";
     };
     "org/gnome/nautilus/preferences" = {
       default-folder-viewer = "icon-view";
     };
   };
-  fonts.fontconfig.enable = true;
-  services.kdeconnect.enable = true;
 
+  fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
 
     # cli
     eza
     bat
+    ani-cli
     fd
     micro
     fastfetch
     zoxide
     trash-cli
     rsync
+    tldr
     jq
     zip
     p7zip
@@ -111,25 +117,26 @@
     unzip
     wget
     autossh
-    xdotool
-    wl-clipboard
     direnv
     fish
     git
     cachix
-    hidapi
     btop
+    alacritty
+    kitty
     xdg-utils
 
+    # hardware
+    hidapi
     vulkan-tools
     libva-utils
     mesa-demos
     intel-gpu-tools
     clinfo
-    heroic
-    bottles
-    prismlauncher
 
+    # desktop
+    xdotool
+    wl-clipboard
     waybar
     wofi
     fuzzel
@@ -142,13 +149,14 @@
     grim
     slurp
     wf-recorder
+    tesseract
 
+    # media
     mpv
     obs-studio
     ffmpeg
     yt-dlp
     imagemagick
-    tesseract
     cava
     pavucontrol
     playerctl
@@ -179,9 +187,7 @@
     uv
 
     # langs
-    odin
     ghc
-    cabal-install
     go
     rustup
     gcc
@@ -203,18 +209,17 @@
     arc-icon-theme
 
     # apps
-    thunderbird
+    heroic
+    bottles
+    prismlauncher
     telegram-desktop
     onlyoffice-desktopeditors
     nautilus
     loupe
-    spacedrive
     qbittorrent
     localsend
     jellyfin-media-player
     calibre
-    ani-cli
-    sioyek
     qalculate-gtk
     libqalculate
     blender
@@ -222,11 +227,7 @@
     antigravity
     spotatui
     whatsapp-electron
-    alacritty
-    kitty
     equibop
     discord
-    slack
-    solaar
   ];
 }
