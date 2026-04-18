@@ -36,15 +36,15 @@
       "audio/ogg" = "mpv.desktop";
 
       # code
-      "text/plain" = "code.desktop";
-      "text/x-rust" = "code.desktop";
-      "text/x-nix" = "code.desktop";
-      "text/x-csrc" = "code.desktop";
-      "text/x-chdr" = "code.desktop";
-      "text/x-python" = "code.desktop";
-      "text/x-shellscript" = "code.desktop";
-      "application/json" = "code.desktop";
-      "application/x-shellscript" = "code.desktop";
+      "text/plain" = "zeditor.desktop";
+      "text/x-rust" = "zeditor.desktop";
+      "text/x-nix" = "zeditor.desktop";
+      "text/x-csrc" = "zeditor.desktop";
+      "text/x-chdr" = "zeditor.desktop";
+      "text/x-python" = "zeditor.desktop";
+      "text/x-shellscript" = "zeditor.desktop";
+      "application/json" = "zeditor.desktop";
+      "application/x-shellscript" = "zeditor.desktop";
     };
   };
 }
