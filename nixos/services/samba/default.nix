@@ -47,8 +47,8 @@
         "read only" = "no";
         "guest ok" = "yes";
         "guest only" = "yes";
-        "create mask" = "0777";
-        "directory mask" = "0777";
+        "create mask" = "0664";
+        "directory mask" = "0775";
         "force user" = config.users.users.elars.name;
         "force group" = "users";
       };
